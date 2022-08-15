@@ -9,7 +9,7 @@ class Gene:
         self.allele_2 = allele_2
 
     def genotype_gene(self):
-        return "{0}{1}".format(self.allele_1, self.allele_2)
+        return f"{self.allele_1}{self.allele_2}"
 
     def phenotype_gene(self):
         if self.allele_1.isupper():
@@ -29,6 +29,9 @@ class Chromosome:
     # The class expects a list of genes
     def __init__(self, genes):
         self.genes = genes
+
+    def __add__(self, other):
+        return Chromosome(self.genes + other.genes)
 
     def genotype(self):
         result = []
