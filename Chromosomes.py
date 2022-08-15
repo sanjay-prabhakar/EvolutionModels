@@ -8,6 +8,9 @@ class Gene:
         self.allele_1 = allele_1
         self.allele_2 = allele_2
 
+    def __add__(self, other):
+        return Chromosome([self, other])
+
     def genotype_gene(self):
         return f"{self.allele_1}{self.allele_2}"
 

@@ -1,8 +1,0 @@
-#class EyeGenes(Chromosome):
-
-gene_1 = Gene("a", "A")
-gene_2 = Gene("B", "B")
-chromosome_1 = Chromosome([gene_1])
-chromosome_2 = Chromosome([gene_2])
-chromosome_sum = chromosome_1 + chromosome_2
-print(chromosome_sum.genotype())
