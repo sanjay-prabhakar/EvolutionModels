@@ -1,4 +1,4 @@
-from eyegenes import EyeGenes, string_to_EyeGenes, Chromosome_to_EyeGenes, recombination_eye, reproduce_eye
+from eyegenes import EyeGenes, string_to_EyeGenes, Chromosome_to_EyeGenes, reproduce_eye, reproduce_eye_enhanced
 from chromosomes import Gene, Chromosome, string_to_Chromosome, recombination, reproduce
 from eyecolour import infer_genotype
 import matplotlib.pyplot as plt
@@ -17,12 +17,17 @@ if __name__ == '__main__':
         for i in range(founders_input[colour]):
             genotype = infer_genotype(colour)
             founders.append(string_to_EyeGenes(genotype))
-    fertility = int(input("Enter the number of offspring per couple: ")) # TODO: incorporate variable fertility by eye colour
+    fertility = int(input("Enter the number of offspring per couple: "))
+    advantage = input("Which eye colour would you like to enhance the fitness of? If none, enter 'none'. ")
+    if advantage != "none":
+        multiplier = input(f"What relative fertility would you like to give {advantage} eyes? (Default = 1) ")
+    else:
+        multiplier = 1
     generations = int(input("To which generation would you like to evolve? The founding population is the 1st "
                             "generation. "))
     all_gens = {1: founders}
     for i in range(1, generations):
-        new_gen = reproduce_eye(all_gens[i], fertility)
+        new_gen = reproduce_eye_enhanced(all_gens[i], fertility, advantage, multiplier)
         all_gens[i+1] = new_gen
     all_numbers = {}
     for generation in all_gens:
@@ -47,7 +52,7 @@ if __name__ == '__main__':
     #print(all_brown)
     #print(all_green)
     #print(all_blue)
-    print(all_totals)
+    #print(all_totals)
     generations = list(range(1, generations + 1))
     plt.plot(generations, all_brown, color = "brown")
     plt.plot(generations, all_green, color = "green")

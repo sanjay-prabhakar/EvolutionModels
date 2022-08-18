@@ -97,25 +97,15 @@ def recombination(father, mother):
     new_genes = []
     for j in range(num_genes):
         new_genes.append(Gene(recombined_1[j], recombined_2[j]))
-    return Chromosome(new_genes)
+    return type(father)(new_genes)
 
 
 def reproduce(pop, fertility):
     # randomly pairs members (= Chromosomes) of a population; each pair has n=fertilty offspring
     shuffle(pop)
     offspring = []
-    for i in range(0, len(pop)-1, 2):
-        num_offspring = round(normal(fertility,1))
+    for i in range(len(pop)-1, 2):
+        num_offspring = round(normal(fertility, 1))
         for j in range(num_offspring):
             offspring.append(recombination(pop[i], pop[i+1]))
     return offspring
-
-'''
-genotype_strings = ["AAbbccdd", "aaBBccdd", "aabbCCdd", "aabbccDD"]
-pop = []
-for string in genotype_strings:
-    pop.append(string_to_Chromosome(string))
-children = reproduce(pop, 2)
-for child in children:
-    print(child.genotype())
-'''

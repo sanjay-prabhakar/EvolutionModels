@@ -1,4 +1,6 @@
 from chromosomes import Gene, Chromosome, string_to_Chromosome, recombination, reproduce
+from random import shuffle
+from numpy.random import normal
 
 class EyeGenes(Chromosome):
     def __init__(self, genes):
@@ -19,16 +21,27 @@ def Chromosome_to_EyeGenes(chromosome):
     return EyeGenes(chromosome.get_genes())
 
 
-def recombination_eye(father, mother):
-    return EyeGenes(recombination(father, mother).get_genes())
-
-
 def reproduce_eye(pop, fertility):
     offspring_chromosomes = reproduce(pop, fertility)
     offspring_eyes = []
     for child in offspring_chromosomes:
         offspring_eyes.append(Chromosome_to_EyeGenes(child))
     return offspring_eyes
+
+
+def reproduce_eye_enhanced(pop, fertility, colour, multiplier):
+    shuffle(pop)
+    offspring = []
+    for i in range(0, len(pop) - 1, 2):
+        multiply = 1
+        if pop[i] == colour:
+            multiply *= multiplier
+        if pop[i + 1] == colour:
+            multiply *= multiplier
+        num_offspring = round(normal(fertility * multiply, 1))
+        for j in range(num_offspring):
+            offspring.append(recombination(pop[i], pop[i + 1]))
+    return offspring
 
 
 def string_to_EyeGenes(string):
